@@ -10,8 +10,8 @@
  */
 rb_tree_t *rb_tree_node(rb_tree_t *parent, int value, rb_color_t color)
 {
-    
-	rb_tree_t *newN = (rb_tree_t *) malloc(sizeof(rb_tree_t));
+
+	rb_tree_t *newN = (rb_tree_t *)malloc(sizeof(rb_tree_t));
 
 	if (!newN)
 		return (NULL);
