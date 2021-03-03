@@ -40,25 +40,4 @@ typedef struct rb_tree_s
 rb_tree_t *rb_tree_node(rb_tree_t *parent, int value, rb_color_t color);
 void rb_tree_print(const rb_tree_t *tree);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #endif /* C7C3570E_179A_4EA8_AACD_039567CD4226 */
