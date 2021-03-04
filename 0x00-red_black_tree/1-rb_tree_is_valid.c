@@ -13,11 +13,9 @@ int recursion(const rb_tree_t *tree, size_t *num_black)
 
 	if (!tree)
 		return (*num_black = 1);
-	if (tree->color != RED && tree->color != BLACK)
-		return (0);
-	if (tree->color == RED && tree->left && tree->left->color != BLACK)
-		return (0);
-	if (tree->color == RED && tree->right && tree->right->color != BLACK)
+	if ((tree->color != RED && tree->color != BLACK)
+	 || (tree->color == RED && ((tree->left && tree->left->color != BLACK)
+	  || (tree->right && tree->right->color != BLACK))))
 		return (0);
 	l = recursion(tree->left, num_black);
 	r = recursion(tree->right, &num_black_right);
