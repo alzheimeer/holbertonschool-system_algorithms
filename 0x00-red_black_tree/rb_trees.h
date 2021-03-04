@@ -5,6 +5,26 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+
+
+#define moveRed(sibling) \
+	((sibling->left && \
+	sibling->left == RED) || \
+	(sibling->right && \
+	sibling->right == RED))
+#define moveBlack(node, succesor) \
+	((succesor == NULL || \
+	succesor->color == BLACK) && \
+	(node->color == BLACK))
+#define GetP(node) ((node == NULL) ? NULL : node->parent)
+#define GetGP(node) GetP(GetP(node))
+#define GetS(node) \
+	(GetP(node) ? \
+	((node == (GetP(node)->left)) ? \
+	(GetP(node)->right) : \
+	(GetP(node)->left)) : \
+	NULL)
+#define GetU(node) GetS(GetP(node))
 /**
  * enum rb_color_e - Possible color of a Red-Black tree
  *
@@ -54,14 +74,11 @@ rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value);
 rb_tree_t *array_to_rb_tree(int *array, size_t size);
 
 /* rb_tree_remove.c */
-rb_tree_t *rb_tree_remove(rb_tree_t *root, int n);
-void rb_tree_remove_node(rb_tree_t **tree, rb_tree_t *z);
-void rb_tree_remove_fixup(rb_tree_t **tree, rb_tree_t *x, rb_tree_t *x_parent);
-rb_tree_t *rb_tree_fix_right_sibling(rb_tree_t **tree, rb_tree_t *x,
-	rb_tree_t *x_parent);
-rb_tree_t *rb_tree_fix_left_sibling(rb_tree_t **tree, rb_tree_t *x,
-	rb_tree_t *x_parent);
-void rb_tree_replace(rb_tree_t **tree, rb_tree_t *before, rb_tree_t *after);
-rb_tree_t *inorder_successor(rb_tree_t *z);
+void rotate(rb_tree_t *node, int sense);
+void fix_tree(rb_tree_t *node);
+rb_tree_t *_succesor(rb_tree_t *node);
+rb_tree_t *sValue(rb_tree_t *root, int n);
+void move_red(rb_tree_t *sibling, rb_tree_t *parent);
+rb_tree_t *delete(rb_tree_t *node);
 
 #endif /* C7C3570E_179A_4EA8_AACD_039567CD4226 */
