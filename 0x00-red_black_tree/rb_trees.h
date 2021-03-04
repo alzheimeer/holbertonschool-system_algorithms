@@ -42,6 +42,5 @@ void rb_tree_print(const rb_tree_t *tree);
 
 
 int rb_tree_is_valid(const rb_tree_t *tree);
-int recursion(const rb_tree_t *tree, size_t *num_black);
 
 #endif /* C7C3570E_179A_4EA8_AACD_039567CD4226 */
