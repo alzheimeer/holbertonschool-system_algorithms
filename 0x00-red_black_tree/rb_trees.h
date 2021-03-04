@@ -53,4 +53,13 @@ rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value);
 
 rb_tree_t *array_to_rb_tree(int *array, size_t size);
 
+/* rb_tree_remove.c */
+rb_tree_t *rb_tree_remove(rb_tree_t *root, int n);
+rb_tree_t *rb_tree_delete(rb_tree_t *root, rb_tree_t *remove);
+void rb_transplant(rb_tree_t **root, rb_tree_t *x, rb_tree_t *y);
+rb_tree_t *rb_delete_fixup(rb_tree_t *root, rb_tree_t *x);
+rb_tree_t *rb_delete_fix_left(rb_tree_t **root, rb_tree_t *x);
+rb_tree_t *rb_delete_fix_right(rb_tree_t **root, rb_tree_t *x);
+rb_tree_t *tree_min(rb_tree_t *root);
+
 #endif /* C7C3570E_179A_4EA8_AACD_039567CD4226 */
