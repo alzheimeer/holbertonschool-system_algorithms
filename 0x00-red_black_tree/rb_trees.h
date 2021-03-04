@@ -43,4 +43,12 @@ void rb_tree_print(const rb_tree_t *tree);
 
 int rb_tree_is_valid(const rb_tree_t *tree);
 
+
+void rb_rotate_right(rb_tree_t **tree, rb_tree_t *y);
+void rb_rotate_left(rb_tree_t **tree, rb_tree_t *x);
+rb_tree_t *rb_insert_fixup_RIGHT(rb_tree_t **tree, rb_tree_t *new);
+rb_tree_t *rb_insert_fixup_LEFT(rb_tree_t **tree, rb_tree_t *new);
+void rb_insert_fixup(rb_tree_t **tree, rb_tree_t *new);
+rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value);
+
 #endif /* C7C3570E_179A_4EA8_AACD_039567CD4226 */
