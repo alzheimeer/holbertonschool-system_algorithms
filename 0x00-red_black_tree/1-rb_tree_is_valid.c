@@ -1,5 +1,6 @@
 #include "rb_trees.h"
 
+
 /**
  * rb_tree_is_valid - valildates RB tree properties
  * @tree: pointer to root of tree to validate
@@ -8,7 +9,11 @@
 int rb_tree_is_valid(const rb_tree_t *tree)
 {
 	size_t b1 = 0, b2 = 0;
+	static int x = 0;
 
+	if (x == 0 && tree->color != BLACK)
+		return (0);
+	x = 1;
 	if (!tree)
 		return (0);
 	if (tree->color != RED && tree->color != BLACK)
