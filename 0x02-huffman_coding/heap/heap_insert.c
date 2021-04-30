@@ -3,27 +3,27 @@
 /**
  * iwithIndex - Inserts node level ordered
  * @root: Type binary_tree pointer of the parent node
- * @data: Data inserted into node
+ * @value: Type int value of value inserted into node
  * @idx: Type int index of the node
- * @sizeNode: number the nodes + 1
+ * @nNode: number the nodes + 1
  * Return: Node inserted
  */
-binary_tree_node_t *iwithIndex(binary_tree_node_t *root, int data, size_t idx, size_t sizeNode)
+heap_t *iwithIndex(binary_tree_node_t *root, int value, size_t idx, size_t nNode)
 {
-	binary_tree_node_t *nodel, *noder;
-	size_t parent = sizeNode / 2;
+	heap_t *nodel, *noder;
+	size_t parent = nNode / 2;
 
 	if (!root)
 		return (NULL);
 	if (idx == parent)
 	{
-		if (sizeNode % 2)
-			return (root->right = binary_tree_node(root, data));
+		if (nNode % 2)
+			return (root->right = binary_tree_node(root, value));
 		else
-			return (root->left = binary_tree_node(root, data));
+			return (root->left = binary_tree_node(root, value));
 	}
-	nodel = iwithIndex(root->left, data, 2 * idx, sizeNode);
-	noder = iwithIndex(root->right, data, 2 * idx + 1, sizeNode);
+	nodel = iwithIndex(root->left, value, 2 * idx, nNode);
+	noder = iwithIndex(root->right, value, 2 * idx + 1, nNode);
 	if (nodel)
 		return (nodel);
 	else
