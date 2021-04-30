@@ -54,7 +54,7 @@ heap_t *heap_create(int (*data_cmp)(void *, void *));
 binary_tree_node_t *binary_tree_node(binary_tree_node_t *parent, void *data);
 
 /* Insert Prototypes */
-binary_tree_node_t *iwithIndex(binary_tree_node_t *root, int value, size_t idx, size_t nNode);
+binary_tree_node_t *iwithIndex(binary_tree_node_t *root, void *value, size_t idx, void *nNode);
 binary_tree_node_t *heap_insert(heap_t *heap, void *data);
 
 /* Extract Prototypes */
