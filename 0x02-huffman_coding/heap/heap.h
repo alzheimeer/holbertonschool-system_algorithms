@@ -52,22 +52,15 @@ heap_t *heap_create(int (*data_cmp)(void *, void *));
 binary_tree_node_t *binary_tree_node(binary_tree_node_t *parent, void *data);
 
 /* Insert Prototypes */
+binary_tree_node_t *iwithIndex(binary_tree_node_t *root, int data, size_t idx, size_t sizeNode);
 binary_tree_node_t *heap_insert(heap_t *heap, void *data);
-binary_tree_node_t *insert(heap_t *heap, void *data);
-stack_t *push(stack_t **stack, int direction);
-int pop(stack_t **stack);
-binary_tree_node_t *get_parent(heap_t *heap, stack_t **stack);
-int power(int n, int e);
-int logarithm2(int n);
 
 /* Extract Prototypes */
-void *heap_extract(heap_t *heap);
-void *replace(heap_t *heap);
-void replace_root(heap_t *heap, stack_t **stack);
+void heapify_down(heap_t *heap);
+void *heap_extract(heap_t *heap)
 
-/* Delete Prototypes */
-void heap_delete(heap_t *heap, void (*free_data)(void *));
-void delete_tree_r(binary_tree_node_t *node, void (*free_data)(void *));
-
+	/* Delete Prototypes */
+	void heap_delete(heap_t *heap, void (*free_data)(void *));
+void free_tree(binary_tree_node_t *root, void (*free_data)(void *));
 
 #endif /* _HEAP_H_ */
