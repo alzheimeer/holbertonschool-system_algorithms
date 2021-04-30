@@ -8,10 +8,9 @@
  * @nNode: number the nodes + 1
  * Return: Node inserted
  */
-binary_tree_node_t *iwithIndex(binary_tree_node_t *root, void *value, size_t idx, void *nNode)
+binary_tree_node_t *iwithIndex(binary_tree_node_t *root, void *value, size_t idx, size_t nNode2)
 {
 	binary_tree_node_t *nodel, *noder;
-	size_t nNode2 = n * Node;
 	size_t parent = nNode2 / 2;
 
 	if (!root)
@@ -23,8 +22,8 @@ binary_tree_node_t *iwithIndex(binary_tree_node_t *root, void *value, size_t idx
 		else
 			return (root->left = binary_tree_node(root, &value));
 	}
-	nodel = iwithIndex(root->left, value, 2 * idx, nNode);
-	noder = iwithIndex(root->right, value, 2 * idx + 1, nNode);
+	nodel = iwithIndex(root->left, value, 2 * idx, nNode2);
+	noder = iwithIndex(root->right, value, 2 * idx + 1, nNode2);
 	if (nodel)
 		return (nodel);
 	else
