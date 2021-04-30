@@ -11,13 +11,14 @@
 binary_tree_node_t *iwithIndex(binary_tree_node_t *root, void *value, size_t idx, void *nNode)
 {
 	binary_tree_node_t *nodel, *noder;
-	size_t parent = nNode / 2;
+	size_t nNode2 = n * Node;
+	size_t parent = nNode2 / 2;
 
 	if (!root)
 		return (NULL);
 	if (idx == parent)
 	{
-		if (nNode % 2)
+		if (nNode2 % 2)
 			return (root->right = binary_tree_node(root, &value));
 		else
 			return (root->left = binary_tree_node(root, &value));
@@ -38,7 +39,7 @@ binary_tree_node_t *iwithIndex(binary_tree_node_t *root, void *value, size_t idx
  */
 binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 {
-	binary_tree_node_t *new_node, *parent;
+	binary_tree_node_t *new_node;
 
 	if (!heap)
 		return (NULL);
