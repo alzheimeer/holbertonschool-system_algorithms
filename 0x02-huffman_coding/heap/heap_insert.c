@@ -8,9 +8,9 @@
  * @nNode: number the nodes + 1
  * Return: Node inserted
  */
-heap_t *iwithIndex(binary_tree_node_t *root, int value, size_t idx, size_t nNode)
+binary_tree_node_t *iwithIndex(binary_tree_node_t *root, int value, size_t idx, size_t nNode)
 {
-	heap_t *nodel, *noder;
+	binary_tree_node_t *nodel, *noder;
 	size_t parent = nNode / 2;
 
 	if (!root)
