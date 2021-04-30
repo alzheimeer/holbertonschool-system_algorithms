@@ -46,7 +46,7 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 	if (!heap->root)
 		return (heap->root = binary_tree_node(NULL, data));
 	new_node = iwithIndex(heap->root, data, 1, heap->size);
-	while (new_node && new_node->parent && new_node->data > new_node->parent->data)
+	while (new_node && new_node->parent && new_node->data < new_node->parent->data)
 	{
 		new_node->data = new_node->parent->data;
 		new_node->parent->data = data;
