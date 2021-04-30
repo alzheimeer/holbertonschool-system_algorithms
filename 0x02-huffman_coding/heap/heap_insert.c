@@ -18,9 +18,9 @@ binary_tree_node_t *iwithIndex(binary_tree_node_t *root, int value, size_t idx, 
 	if (idx == parent)
 	{
 		if (nNode % 2)
-			return (root->right = binary_tree_node(root, value));
+			return (root->right = binary_tree_node(root, &value));
 		else
-			return (root->left = binary_tree_node(root, value));
+			return (root->left = binary_tree_node(root, &value));
 	}
 	nodel = iwithIndex(root->left, value, 2 * idx, nNode);
 	noder = iwithIndex(root->right, value, 2 * idx + 1, nNode);
