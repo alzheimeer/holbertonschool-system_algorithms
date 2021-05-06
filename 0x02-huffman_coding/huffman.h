@@ -20,8 +20,8 @@ typedef struct symbol_s
  * struct char_freq_s - Stores a two vector arrays for symbols and
  * their frequencies, plus the size of each
  *
- * @data_v: vector of characters
- * @freq_v: vector of frequencies
+ * @data: vector of characters
+ * @freq: vector of frequencies
  * @size: size of the vectors
  */
 typedef struct char_freq_s
