@@ -5,10 +5,11 @@
  * @root: Type binary_tree pointer of the parent node
  * @value: Type int value of value inserted into node
  * @idx: Type int index of the node
- * @nNode: number the nodes + 1
+ * @nNode2: number the nodes + 1
  * Return: Node inserted
  */
-binary_tree_node_t *iwithIndex(binary_tree_node_t *root, void *value, size_t idx, size_t nNode2)
+binary_tree_node_t *iwithIndex(binary_tree_node_t *root,
+							   void *value, size_t idx, size_t nNode2)
 {
 	binary_tree_node_t *nodel, *noder;
 	size_t parent = nNode2 / 2;
@@ -46,7 +47,8 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 	if (!heap->root)
 		return (heap->root = binary_tree_node(NULL, data));
 	new_node = iwithIndex(heap->root, data, 1, heap->size);
-	while (new_node && new_node->parent && new_node->data < new_node->parent->data)
+	while (new_node && new_node->parent &&
+		   new_node->data < new_node->parent->data)
 	{
 		new_node->data = new_node->parent->data;
 		new_node->parent->data = data;
