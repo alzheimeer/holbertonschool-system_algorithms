@@ -33,7 +33,10 @@ typedef struct char_freq_s
 
 /* Prototypes */
 symbol_t *symbol_create(char data, size_t freq);
+
 heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size);
+int cmpF(void *p1, void *p2);
+
 int huffman_extract_and_insert(heap_t *priority_queue);
 binary_tree_node_t *huffman_tree(char *data, size_t *freq, size_t size);
 
@@ -48,5 +51,7 @@ void free_codes(binary_tree_node_t *root);
 int compress(const char *in_file, const char *out_file);
 int decompress(const char *in_file, const char *out_file);
 char_freq_t *count_symbols(const char *in_file);
+
+
 
 #endif /* _HUFFMAN_H_ */
