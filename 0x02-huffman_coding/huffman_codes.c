@@ -1,64 +1,99 @@
-#include "heap.h"
+#include "huffman.h"
+#include <stdio.h>
 
 /**
- * convert - converts a number to a custom base
- * @num: the number to convert
- * @base: the desired base
- * Return: pointer to string containing digits in new base
+ * huffman_codes - produce a huffman tree and print all huffman codes
+ *
+ * @data: array of characters
+ * @freq: array of frequencies of characters
+ * @size: size of the arrays
+ *
+ * Return: 1 on success, 0 on failure
  */
-char *convert(long num, long base)
+int huffman_codes(char *data, size_t *freq, size_t size)
 {
-	char *DIGITS = "0123456789ABCDEFG", *ptr;
-	static char buf[66];
-	short neg = num < 0 ? 1 : 0;
+	binary_tree_node_t *root;
+	char *code;
+	size_t depth, i;
 
-	ptr = &buf[sizeof(buf)];
-	*--ptr = 0;
-	do {
-		*--ptr = DIGITS[ABS(num % base)];
-		num /= base;
-	} while (num);
-	if (neg)
-		*--ptr = '-';
-	return (ptr);
+	root = huffman_tree(data, freq, size);
+	if (root == NULL)
+		return (0);
+	depth = get_depth(root, 0);
+	code = malloc(sizeof(char) + (depth + 1));
+	for (i = 0; i < depth + 1; i++)
+		code[i] = '\0';
+	print_huffman_tree_r(root, code, 0);
+	free(code);
+	free_codes(root);
+
+	return (1);
 }
 
 /**
- * heap_insert - inserts new node into min heap
- * @heap: pointer to heap structure
- * @data: pointer to data
- * Return: pointer to new node or NULL
+ * free_codes - free all nodes in the huffman tree
+ *
+ * @root: root of current tree to free
  */
-binary_tree_node_t *heap_insert(heap_t *heap, void *data)
+void free_codes(binary_tree_node_t *root)
 {
-	size_t i;
-	binary_tree_node_t *new_node, *node;
-	char *bitstr;
-	void *temp;
+	if (root->left)
+		free_codes(root->left);
+	if (root->right)
+		free_codes(root->right);
+	free(root->data);
+	free(root);
+}
 
-	if (!heap)
-		return (NULL);
-	new_node = binary_tree_node(NULL, data);
-	if (!new_node)
-		return (NULL);
-	heap->size++;
-	if (!heap->root)
-		return (heap->root = new_node);
-	bitstr = convert(heap->size, 2);
-	for (node = heap->root, i = 1; i < strlen(bitstr) - 1; i++)
-		node = bitstr[i] == '1' ? node->right : node->left;
-	if (bitstr[i] == '1')
-		node->right = new_node;
+/**
+ * get_depth - get the depth from the current @root
+ *
+ * @root: current root of the tree
+ * @depth: depth in the tree
+ *
+ * Return: depth of the tree from @root
+ */
+size_t get_depth(binary_tree_node_t *root, size_t depth)
+{
+	int left_depth, right_depth;
+
+	left_depth = right_depth = -1;
+	if (root->left)
+		left_depth = get_depth(root->left, depth + 1);
+	if (root->right)
+		right_depth = get_depth(root->right, depth + 1);
 	else
-		node->left = new_node;
-	new_node->parent = node;
-	node = new_node;
-	while (node->parent && heap->data_cmp(node->parent->data, node->data) > 0)
+		return (depth);
+	if (left_depth > right_depth)
+		return (left_depth);
+	return (right_depth);
+}
+
+/**
+ * print_huffman_tree_r - print a huffman tree's contents recursively from
+ * a given @root
+ *
+ * @root: current root of huffman tree
+ * @code: code to print
+ * @depth: depth into huffman tree
+ */
+void print_huffman_tree_r(binary_tree_node_t *root, char *code, size_t depth)
+{
+	if (root->left)
 	{
-		temp = node->data;
-		node->data = node->parent->data;
-		node->parent->data = temp;
-		node = node->parent;
+		code[depth] = '0';
+		print_huffman_tree_r(root->left, code, depth + 1);
 	}
-	return (new_node);
+	if (root->right)
+	{
+		code[depth] = '1';
+		print_huffman_tree_r(root->right, code, depth + 1);
+	}
+	else
+	{
+		symbol_t *symbol;
+
+		symbol = (symbol_t *)root->data;
+		printf("%c: %s\n", symbol->data, code);
+	}
 }
