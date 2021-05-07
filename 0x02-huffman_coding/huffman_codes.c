@@ -1,8 +1,5 @@
 #include "huffman.h"
 
-char *convert(long num, long base);
-void print_huffman_codes(binary_tree_node_t *tree, unsigned long path);
-
 /**
  * huffman_codes - generates character codes from huffman tree
  * @data: array of characters
