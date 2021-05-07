@@ -2,9 +2,7 @@
 
 /**
  * heap_create - create an empty heap structure
- *
  * @data_cmp: comparison function for comparing two nodes
- *
  * Return: pointer to heap
  */
 heap_t *heap_create(int (*data_cmp)(void *, void *))
