@@ -57,7 +57,14 @@ binary_tree_node_t *binary_tree_node(binary_tree_node_t *parent, void *data);
 
 /* Insert Prototypes */
 binary_tree_node_t *iwithIndex(binary_tree_node_t *root,
-							   void *value, size_t idx, size_t nNode2);
+			       void *value, size_t idx, size_t nNode2);
+binary_tree_node_t *n_node(binary_tree_node_t *node, int n);
+/* Insert Prototypes */
+binary_tree_node_t *heapify(int (*data_cmp)(void *, void *),
+			    binary_tree_node_t *node);
+
+binary_tree_node_t *swap_nodes(binary_tree_node_t *a, binary_tree_node_t *b);
+
 binary_tree_node_t *heap_insert(heap_t *heap, void *data);
 
 /* Extract Prototypes */
