@@ -1,39 +1,33 @@
 #include "huffman.h"
 
 /**
- * huffman_extract_and_insert - extract two nodes from the queue and insert
- * a single node that contains the sum of both frequencies of the two
- * extracted nodes
- *
- * @priority_queue: min heap of all the character data and frequencies
- *
- * Return: 1 on success, 0 on failure
+ * huffman_extract_and_insert - extracts two node and inserts as one
+ * @priority_queue: our huffman priorty queue to act upon
+ * Return: 1 on success else 0 on failure
  */
 int huffman_extract_and_insert(heap_t *priority_queue)
 {
-	void *p1, *p2;
-	binary_tree_node_t *node, *n1, *n2;
-	symbol_t *symbol, *s1, *s2;
+	binary_tree_node_t *node1, *node2, *newnode;
+	symbol_t *symbol;
 
-	p1 = heap_extract(priority_queue);
-	p2 = heap_extract(priority_queue);
-	if (p1 == NULL || p2 == NULL)
+	if (!priority_queue || priority_queue->size < 2)
 		return (0);
-	n1 = (binary_tree_node_t *)p1;
-	n2 = (binary_tree_node_t *)p2;
-	s1 = (symbol_t *)n1->data;
-	s2 = (symbol_t *)n2->data;
-	symbol = symbol_create(-1, s1->freq + s2->freq);
-	if (symbol == NULL)
+	node1 = heap_extract(priority_queue);
+	node2 = heap_extract(priority_queue);
+	if (!node1 || !node2)
 		return (0);
-	node = binary_tree_node(NULL, symbol);
-	if (node == NULL)
+	symbol = symbol_create(-1,
+						   ((symbol_t *)node1->data)->freq + ((symbol_t *)node2->data)->freq);
+	if (!symbol)
 		return (0);
-	node->left = n1;
-	node->right = n2;
-	n1->parent = node;
-	n2->parent = node;
-	if (heap_insert(priority_queue, node) == NULL)
-		return (0);
-	return (1);
+	newnode = binary_tree_node(NULL, symbol);
+	if (!newnode)
+		return (free(symbol), 0);
+	newnode->left = node1;
+	newnode->right = node2;
+	node1->parent = newnode;
+	node2->parent = newnode;
+	if (heap_insert(priority_queue, newnode))
+		return (1);
+	return (0);
 }
