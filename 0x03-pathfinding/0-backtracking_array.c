@@ -123,13 +123,13 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 	if (path == NULL)
 		return (-1);
 
-	*visited = malloc(rows * sizeof(**visited));
-	if (*visited == NULL)
+	visited = malloc(rows * sizeof(**visited));
+	if (visited == NULL)
 		return (-1);
 	for (i = 0; i < rows; i++)
 	{
-		(*visited)[i] = calloc(cols, sizeof(**visited));
-		if ((*visited)[i] == NULL)
+		(visited)[i] = calloc(cols, sizeof(**visited));
+		if ((visited)[i] == NULL)
 			return (-1);
 	}
 	direction[BOTTOM].x = 0, direction[BOTTOM].y = 1;
