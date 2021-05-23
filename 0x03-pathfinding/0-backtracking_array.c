@@ -116,7 +116,7 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 		free(visited[i]);
 	free(visited);
 
-	if (itWorked)
+	if (checkedIt)
 		return (path);
 
 	else
