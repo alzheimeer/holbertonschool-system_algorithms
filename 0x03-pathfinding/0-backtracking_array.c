@@ -1,26 +1,6 @@
 #include "pathfinding.h"
 
 /**
- * isValid - checks if position is ok to go to and hasn't been visited
- * @map: 2d array to explore (0 is walkable, 1 is blocked)
- * @visited: array that keeps track of where we've been
- * @x: x coordinate of position to check
- * @y: y coordinate of position to check
- * @rows: number of rows
- * @cols: number of columns
- * Return: 1 if it's safe, 0 if not
- */
-int isValid(char **map, int **visited, int x, int y, int rows, int cols)
-{
-	if (x < 0 || y < 0 || x >= cols || y >= rows)
-		return (0);
-	else if (map[y][x] == '1' || visited[y][x] == 1)
-		return (0);
-	else
-		return (1);
-}
-
-/**
  * initialize_arrays - creates path queue, visited map, array of directions
  *
  * @path: path queue
@@ -102,7 +82,9 @@ int recursive_backtrack(char **map, int **visited, int x, int y,
 	int i;
 
 	/* CHECK IF COORDINATES ARE VALID */
-	if (isValid(map, visited, x, y, rows, cols) == 0)
+	if (x < 0 || y < 0 || x >= cols || y >= rows)
+		return (0);
+	else if (map[y][x] == '1' || visited[y][x] == 1)
 		return (0);
 
 	printf("Checking coordinates [%d, %d]\n", x, y);
