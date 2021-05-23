@@ -1,43 +1,6 @@
 #include "pathfinding.h"
 
 /**
- * initialize_arrays - creates path queue, visited map, array of directions
- *
- * @path: path queue
- * @visited: pointer to visited 2d array
- * @direction: array of directions
- * @rows: number of rows
- * @cols: number of columns
- *
- * Return: 0 on success, -1 on failure
- */
-int initialize_arrays(queue_t **path, int ***visited, point_t *direction,
-					  int rows, int cols)
-{
-	int i;
-
-	*path = queue_create();
-	if (*path == NULL)
-		return (-1);
-
-	*visited = malloc(rows * sizeof(**visited));
-	if (*visited == NULL)
-		return (-1);
-	for (i = 0; i < rows; i++)
-	{
-		(*visited)[i] = calloc(cols, sizeof(**visited));
-		if ((*visited)[i] == NULL)
-			return (-1);
-	}
-
-	direction[BOTTOM].x = 0, direction[BOTTOM].y = 1;
-	direction[RIGHT].x = 1, direction[RIGHT].y = 0;
-	direction[LEFT].x = -1, direction[LEFT].y = 0;
-	direction[TOP].x = 0, direction[TOP].y = -1;
-	return (0);
-}
-
-/**
  * update_path - adds point to queue
  *
  * @path: current queue
@@ -125,13 +88,24 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 
 	if (!map || !*map || rows <= 0 || cols <= 0 || !start || !target)
 		return (NULL);
-
-	if (initialize_arrays(&path, &visited, directions, rows, cols) == -1)
-		return (NULL);
-
+	path = queue_create();
+	if (path == NULL)
+		return (-1);
+	*visited = malloc(rows * sizeof(**visited));
+	if (*visited == NULL)
+		return (-1);
+	for (i = 0; i < rows; i++)
+	{
+		(*visited)[i] = calloc(cols, sizeof(**visited));
+		if ((*visited)[i] == NULL)
+			return (-1);
+	}
+	direction[BOTTOM].x = 0, direction[BOTTOM].y = 1;
+	direction[RIGHT].x = 1, direction[RIGHT].y = 0;
+	direction[LEFT].x = -1, direction[LEFT].y = 0;
+	direction[TOP].x = 0, direction[TOP].y = -1;
 	itWorked = (recursive_backtrack(map, visited, start->x, start->y,
 									target, &path, directions, rows, cols));
-
 	for (i = 0; i < rows; i++)
 		free(visited[i]);
 	free(visited);
