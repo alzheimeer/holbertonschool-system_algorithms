@@ -16,7 +16,11 @@ int initialize_arrays(queue_t **path, int ***visited, point_t *direction,
 {
 	int i;
 
-		*visited = malloc(rows * sizeof(**visited));
+	*path = queue_create();
+	if (*path == NULL)
+		return (-1);
+
+	*visited = malloc(rows * sizeof(**visited));
 	if (*visited == NULL)
 		return (-1);
 	for (i = 0; i < rows; i++)
@@ -26,7 +30,11 @@ int initialize_arrays(queue_t **path, int ***visited, point_t *direction,
 			return (-1);
 	}
 
-		return (0);
+	direction[BOTTOM].x = 0, direction[BOTTOM].y = 1;
+	direction[RIGHT].x = 1, direction[RIGHT].y = 0;
+	direction[LEFT].x = -1, direction[LEFT].y = 0;
+	direction[TOP].x = 0, direction[TOP].y = -1;
+	return (0);
 }
 
 /**
@@ -113,11 +121,6 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 
 	if (initialize_arrays(&path, &visited, directions, rows, cols) == -1)
 		return (NULL);
-
-	direction[BOTTOM].x = 0, direction[BOTTOM].y = 1;
-	direction[RIGHT].x = 1, direction[RIGHT].y = 0;
-	direction[LEFT].x = -1, direction[LEFT].y = 0;
-	direction[TOP].x = 0, direction[TOP].y = -1;
 
 	checkedIt = (recursive_backtrack(map, visited, start->x, start->y,
 									 target, &path, directions, rows, cols));
