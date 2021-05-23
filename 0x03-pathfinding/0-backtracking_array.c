@@ -113,9 +113,7 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 
 	if (initialize_arrays(&path, &visited, directions, rows, cols) == -1)
 		return (NULL);
-	path = queue_create();
-	if (path == NULL)
-		return (-1);
+
 	direction[BOTTOM].x = 0, direction[BOTTOM].y = 1;
 	direction[RIGHT].x = 1, direction[RIGHT].y = 0;
 	direction[LEFT].x = -1, direction[LEFT].y = 0;
