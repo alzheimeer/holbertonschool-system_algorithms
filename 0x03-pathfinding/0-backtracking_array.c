@@ -38,29 +38,6 @@ int initialize_arrays(queue_t **path, int ***visited, point_t *direction,
 }
 
 /**
- * update_path - adds point to queue
- *
- * @path: current queue
- * @x: current x coordinate
- * @y: current y coordinate
- *
- * Return: 1 on success, 0 on failure
- */
-int update_path(queue_t **path, int x, int y)
-{
-	point_t *current;
-
-	current = malloc(sizeof(*current));
-	if (!current)
-		return (0);
-	current->x = x;
-	current->y = y;
-
-	queue_push_front(*path, current);
-	return (1);
-}
-
-/**
  * recursive_backtracking_array - recursive backingtracking function
  *
  * @map: pointer to given 2D array to explore (0 is walkable, 1 is blocked
@@ -104,7 +81,7 @@ int recursive_backtrack(char **map, int **visited, int x, int y,
 	visited[y][x] = 1;
 
 	/* CHECK EACH DIRECTION */
-	for (i = 0; i < NUM_DIRECTIONS; i++)
+	for (i = 0; i < 4; i++)
 	{
 		if (recursive_backtrack(map, visited, x + directions[i].x,
 								y + directions[i].y, target, path, directions, rows, cols) == 1)
@@ -135,26 +112,41 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 							point_t const *start, point_t const *target)
 {
 	int **visited;
-	int i, itWorked;
+	int i, checkedIt;
 	queue_t *path;
-	point_t directions[NUM_DIRECTIONS];
+	point_t directions[4];
 
 	if (!map || !*map || rows <= 0 || cols <= 0 || !start || !target)
 		return (NULL);
 
-	if (initialize_arrays(&path, &visited, directions, rows, cols) == -1)
-		return (NULL);
+	path = queue_create();
+	if (path == NULL)
+		return (-1);
 
-	itWorked = (recursive_backtrack(map, visited, start->x, start->y,
-									target, &path, directions, rows, cols));
+	visited = malloc(rows * sizeof(*visited));
+	if (visited == NULL)
+		return (-1);
+	for (i = 0; i < rows; i++)
+	{
+		(visited)[i] = calloc(cols, sizeof(*visited));
+		if ((visited)[i] == NULL)
+			return (-1);
+	}
+	direction[BOTTOM].x = 0, direction[BOTTOM].y = 1;
+	direction[RIGHT].x = 1, direction[RIGHT].y = 0;
+	direction[LEFT].x = -1, direction[LEFT].y = 0;
+	direction[TOP].x = 0, direction[TOP].y = -1;
+	
+
+	checkedIt = (recursive_backtrack(map, visited, start->x, start->y,
+									 target, &path, directions, rows, cols));
 
 	for (i = 0; i < rows; i++)
 		free(visited[i]);
 	free(visited);
 
-	if (itWorked)
+	if (checkedIt)
 		return (path);
-
 	else
 	{
 		queue_delete(path);

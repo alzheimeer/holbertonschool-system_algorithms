@@ -1,7 +1,6 @@
 #ifndef D57937A9_B092_4C05_8A99_588D2A08DFEE
 #define D57937A9_B092_4C05_8A99_588D2A08DFEE
 
-#define NUM_DIRECTIONS 4
 #include "graphs.h"
 #include "queues.h"
 #include <stdlib.h>
