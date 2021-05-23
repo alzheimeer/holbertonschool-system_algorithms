@@ -1,6 +1,12 @@
   
 #include "pathfinding.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
+
+static queue_t *backtrack(char **map, char **seen, int rows, int cols,
+			int x, int y, point_t const *target, queue_t *queue);
 
 /**
  * backtracking_array - searches for the first path from a starting point to a

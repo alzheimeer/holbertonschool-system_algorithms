@@ -3,14 +3,7 @@
 
 #include "queues.h"
 #include "graphs.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-
-static queue_t *backtrack(char **map, char **seen, int rows, int cols,
-			int x, int y, point_t const *target, queue_t *queue);
-			
 /**
  * struct point_s - Structure storing coordinates
  *
