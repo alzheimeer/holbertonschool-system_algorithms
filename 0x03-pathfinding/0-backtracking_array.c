@@ -32,13 +32,9 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 	path = queue_create();
 	if (path == NULL)
 		return (0);
-
-	path = malloc(1 * sizeof(queue_t));
-	if (path == NULL)
-		return (0);
 	x = start->x;
 	y = start->y;
-	ret = backtracking(map2, 'Z', x, y, rows, cols, start, target, &path);
+	ret = backtracking(map2, x, y, rows, cols, start, target, &path);
 	if (!ret)
 		queue_delete(path), path = NULL;
 	for (i = 0; i < rows; i++)
@@ -47,7 +43,7 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 	return (path);
 }
 
-int backtracking(char **map, char before, int x, int y,  int rows, int cols,
+int backtracking(char **map, int x, int y,  int rows, int cols,
 		 point_t const *start, point_t const *target, queue_t **path)
 {
 	int right = 0, bottom = 0, left = 0, up = 0;
@@ -67,25 +63,26 @@ int backtracking(char **map, char before, int x, int y,  int rows, int cols,
 		return (1);
 	}
 	if (x + 1 < cols)
-		if (map[y][x + 1] == '0' && before != 'l')
-			right = backtracking((char **)map, 'r', x + 1, y,
+		if (map[y][x + 1] == '0')
+			right = backtracking((char **)map, x + 1, y,
 					     rows, cols, start, target, path);
 	if (y + 1 < rows)
-		if (map[y + 1][x] == '0' && before != 'u' && right != 1)
-			bottom = backtracking((char **)map, 'd', x, y + 1,
+		if (map[y + 1][x] == '0' && right != 1)
+			bottom = backtracking((char **)map, x, y + 1,
 					      rows, cols, start, target, path);
 	if (x - 1 >= 0)
-		if (map[y][x - 1] == '0' && before != 'r' && right != 1
+		if (map[y][x - 1] == '0' && right != 1
 		    && bottom != 1)
-			left = backtracking((char **)map, 'l', x - 1, y,
+			left = backtracking((char **)map, x - 1, y,
 					    rows, cols, start, target, path);
 	if (y - 1 >= 0)
-		if (map[y - 1][x] == '0' && before != 'd' && right != 1
+		if (map[y - 1][x] == '0' && right != 1
 		    && bottom != 1 && left != 1)
-			up = backtracking((char **)map, 'u', x, y - 1,
+			up = backtracking((char **)map, x, y - 1,
 					  rows, cols, start, target, path);
 	if (right == 0 && bottom == 0 && left == 0 && up == 0)
 	{
+		free(current);
 		return (0);
 	}
 	queue_push_front(*path, current);
