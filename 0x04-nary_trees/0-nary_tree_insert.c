@@ -10,17 +10,17 @@
 */
 nary_tree_t *nary_tree_insert(nary_tree_t *parent, char const *str)
 {
-    nary_tree_t *newNode;
+	nary_tree_t *newNode = calloc(1, sizeof(*newNode));
+	char *str = strdup(_str);
 
-    newNode = malloc(sizeof(*newNode));
-	if (!newNode)
-		return (NULL);
-    newNode->content = strdup(str);
-    if (!parent)
-	    return (newNode);
-	newNode->parent = parent;
-    newNode->next = parent->children;
-	parent->nb_children++;
+	if (!newNode || !str)
+		return (free(newNode), free(str), NULL);
+
+	newNode->content = str;
+	if (!parent)
+		return (newNode);
+	newNode->next = parent->children;
 	parent->children = newNode;
+	parent->nb_children++;
 	return (newNode);
 }
